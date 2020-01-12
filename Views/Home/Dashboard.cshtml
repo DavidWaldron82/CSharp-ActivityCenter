@@ -1,0 +1,39 @@
+@model ViewModel
+<h1>Dojo Activity Center</h1>
+<h3>Welcome, @Model.OneUser.Name</h3>
+<a href="/clear">Logout</a>
+         <table class="table">
+            <tr>
+                <th>Activity</th>
+                <th>Date and Time</th>
+                <th>Duration</th>
+                <th>Event Coordinator</th>
+                <th>No. of Participants</th>
+                <th>Actions</th>
+            </tr>
+            @{
+                foreach(Event x in @Model.AllEvents) {
+                    <tr>
+                        <td><a asp-action="Act" asp-route-Id=@x.EventId>@x.EventName</a></td>
+                        <td>@x.D</td>
+                        <td>@x.Duration @x.Hr</td>
+                        <td>@x.CreatedBy.Name</td>
+                        <td>@x.Joined.Count</td>
+
+                        @if(x.UserId == Model.OneUser.UserId)
+                        {
+                            <td><a asp-action="Delete" asp-route-Id=@x.EventId>Delete</a></td>
+                        }
+                        else if(x.Joined.All(r => r.UserId !=Model.OneUser.UserId))
+                        {
+                            <td><a asp-action="Join" asp-route-Id=@x.EventId>Join</a></td>
+                        }
+                        else 
+                        {
+                            <td><a asp-action="Leave" asp-route-Id=@x.EventId>Leave</a></td>
+                        }
+                    </tr>
+                }
+            }
+        </table>
+        <a href="New" class="btn btn-primary" role="button" aria-pressed="true">Add New Activity</a>

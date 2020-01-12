@@ -1,0 +1,16 @@
+@model ViewModel
+<h1>Dojo Activity Center</h1>
+<a href="/Dashboard">Home</a>
+<a href="/clear">Logout</a>
+<h3>Create an Activity</h3>
+<div class="text-center">
+    <h2>@Model.OneEvent.EventName</h2>
+</div>
+    <h3>Event Coordinator: @Model.OneEvent.CreatedBy.Name</h3>
+    <h3>Description:</h3>
+    <p>@Model.OneEvent.Description</p>
+    <h3>Participants:</h3>
+    @{
+        foreach(var p in @Model.OneEvent.Joined){
+        <li>@p.User.Name</li>
+    }}
